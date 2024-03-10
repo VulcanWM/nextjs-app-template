@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation'
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
-import Link from 'next/link';
+import { get_user_from_email } from "@/lib/database";
 
 export default async function Home() {
   const authUser = await getServerSession(authOptions);
@@ -9,7 +9,10 @@ export default async function Home() {
   if (email == null){
     redirect("/api/auth/signin")
   }
-  console.log(email)
+  const userDoc = await get_user_from_email(email)
+  if (userDoc == false){
+    redirect("/create-account")
+  }
 
   return (
     <section className="container grid items-center gap-6 pb-8 pt-6 md:py-10">
@@ -18,7 +21,7 @@ export default async function Home() {
           Dashboard
         </h1>
       </div>
-      <p>{email}</p>
+      <p>Hello {userDoc.username}</p>
     </section>
   )
 }
