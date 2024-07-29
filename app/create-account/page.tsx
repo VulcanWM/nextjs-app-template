@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { Input } from "@/components/ui/input"
 import { Button, buttonVariants } from '@/components/ui/button'
+import { useEffect } from 'react'
 
 
 const initialState = {
@@ -19,6 +20,11 @@ export default function Signup() {
     createUserFunction,
     initialState
   );
+  useEffect(() => {
+    if (state.message === true) {
+      router.push('/dashboard')
+    }
+  }, [state, router])
  
   return (
     <section className="container grid items-center gap-6 pb-8 pt-6 md:py-10">
