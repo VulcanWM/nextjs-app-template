@@ -34,10 +34,7 @@ export default function Signup() {
         </h1>
       </div>
       {state.message == true ? 
-      <>
-        <p>Your account has been created.</p>
-        <Link href="/dashboard" rel="noreferrer" className={buttonVariants() + " w-[100px]"}>Dashboard</Link>
-        </>
+      <></>
       : 
       state.message == "You are not logged in" ? 
       <>
