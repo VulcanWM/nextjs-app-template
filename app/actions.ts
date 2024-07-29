@@ -3,6 +3,7 @@
 import { create_user, get_user_from_email } from "@/lib/database"
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
+import { revalidatePath } from 'next/cache'
 
 export async function createUserFunction(prevState: { message: string } | { message: boolean }, formData: FormData) {
     const username = formData.get("username") as string
@@ -16,6 +17,7 @@ export async function createUserFunction(prevState: { message: string } | { mess
             return {message: true}
         }
         const func = await create_user(username, email as string)
+        revalidatePath("/")
         return {message: func}
     }
 }
